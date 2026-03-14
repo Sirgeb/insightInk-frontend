@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Todo App",
-  description: "Your favorite todo app",
+  title: "InsightInk",
+  description: "A sleek, modern voice-to-text todo app",
 };
 
 export default function RootLayout({
