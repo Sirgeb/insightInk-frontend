@@ -10,9 +10,6 @@ export default function Home() {
 
       {/* Recorder */}
       <VoiceTodo />
-
-      {/* Tasks */}
-      <TodoList />
     </main>
   );
 }

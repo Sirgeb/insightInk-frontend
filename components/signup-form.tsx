@@ -24,16 +24,13 @@ export default function SignupForm() {
 
   const onSubmit = (data: FormValues) => {
     console.log("Signup Data:", data);
-
-    // Example redirect
-    // router.push("/dashboard");
   };
 
   return (
     <Card className="w-full max-w-md border border-white/10 bg-[#0b0f0f] backdrop-blur-xl shadow-2xl">
       <CardContent className="p-8">
         <div className="text-xl md:text-2xl text-center font-medium mb-6 text-white">
-          <p>Sign Up to get started!</p>
+          <p>Sign up to get started!</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -100,7 +97,7 @@ export default function SignupForm() {
           {/* Sign Up Button */}
           <Button
             type="submit"
-            className="w-full bg-transparent border border-white/30 text-white hover:bg-white/10"
+            className="w-full bg-transparent border border-white/30 text-white hover:bg-white/10 hover:cursor-pointer"
           >
             Sign Up
           </Button>

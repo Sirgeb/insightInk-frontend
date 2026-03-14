@@ -34,13 +34,13 @@ export default function ProfileAvatar() {
 
       {/* Avatar */}
       <div className="flex flex-col items-center gap-4">
-        <UserAvatar className="h-32 w-32 md:h-36 md:w-36 border-4 border-orange-300/40" />
+        <UserAvatar className="h-32 w-32 md:h-36 md:w-36 border-4 text-orange-400" />
 
         {/* Upload Button */}
         <Button
           variant="secondary"
           onClick={openFileExplorer}
-          className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white"
+          className="flex items-center gap-2 bg-white/10 hover:bg-white/20 hover:cursor-pointer text-white"
         >
           <Camera size={16} />
           Upload Profile Image

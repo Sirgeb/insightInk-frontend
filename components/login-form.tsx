@@ -23,16 +23,13 @@ export default function LoginForm() {
 
   const onSubmit = (data: FormValues) => {
     console.log("Form Data:", data);
-
-    // Example navigation
-    // router.push("/dashboard");
   };
 
   return (
     <Card className="w-full max-w-md border border-white/10 bg-[#0b0f0f] backdrop-blur-xl shadow-2xl">
       <CardContent className="p-8">
         <div className="text-xl md:text-2xl text-center font-medium mb-6 text-white">
-          <p>Sign In to InsightInk</p>
+          <p>Get started with InsightInk</p>
           <p className="text-sm">Your sleek, modern voice-to-text todo app</p>
         </div>
 
@@ -80,7 +77,7 @@ export default function LoginForm() {
           {/* Sign In Button */}
           <Button
             type="submit"
-            className="w-full bg-transparent border border-white/30 text-white hover:bg-white/10"
+            className="w-full bg-transparent border border-white/30 text-white hover:bg-white/10 hover:cursor-pointer"
           >
             Sign In
           </Button>

@@ -1,4 +1,4 @@
-import ProfileSection from "@/components/ profile-section";
+import ProfileSection from "@/components/profile-section";
 import Navbar from "@/components/navbar";
 
 function Profile() {

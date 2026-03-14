@@ -28,13 +28,10 @@ function ProfileSection() {
 
         {/* Buttons */}
         <div className="flex flex-col gap-4 mt-6">
-          <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
+          <Button className="bg-emerald-600 hover:bg-emerald-700 hover:cursor-pointer text-white">
             Save Changes
           </Button>
-          <Button
-            variant="destructive"
-            className="border-white/30 text-white hover:bg-white/10"
-          >
+          <Button className="border-white/30 text-white hover:bg-white/10 hover:cursor-pointer">
             Logout
           </Button>
         </div>
