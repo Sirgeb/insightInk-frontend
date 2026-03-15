@@ -1,10 +1,15 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState, useTransition } from "react";
-import { ReactMediaRecorder } from "react-media-recorder";
 import { Mic, Square, Loader2 } from "lucide-react";
 import { transcribeAudio } from "@/app/actions/transcribe-action";
 import TodoList from "./todo-list";
+
+const ReactMediaRecorder = dynamic(
+  () => import("react-media-recorder").then((mod) => mod.ReactMediaRecorder),
+  { ssr: false },
+);
 
 export default function VoiceTodo() {
   const [isPending, startTransition] = useTransition();
