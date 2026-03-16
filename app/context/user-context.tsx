@@ -12,14 +12,16 @@ type User = {
 } | null;
 
 export type UserContextType = {
-  user: User;
-  setUser: React.Dispatch<React.SetStateAction<User>>;
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   refreshUser: () => Promise<void>;
 };
 
-export const UserContext = createContext<UserContextType | undefined>(
-  undefined,
-);
+export const UserContext = createContext<UserContextType>({
+  user: null,
+  setUser: () => {},
+  refreshUser: async () => {},
+});
 
 type UserProviderProps = {
   children: React.ReactNode;

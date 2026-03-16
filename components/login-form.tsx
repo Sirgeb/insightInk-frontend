@@ -1,19 +1,51 @@
 "use client";
 
+import { startTransition } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { ActionResponse, signinAction } from "@/app/actions/auth-action";
+import { useActionState, useContext } from "react";
+import { UserContext, UserContextType } from "@/app/context/user-context";
 
 type FormValues = {
   email: string;
   password: string;
 };
 
+const initialState: ActionResponse = {
+  ok: false,
+  message: "",
+};
+
 export default function LoginForm() {
   const router = useRouter();
+  const { setUser } = useContext<UserContextType>(UserContext);
+
+  const [state, formAction, isPending] = useActionState<
+    ActionResponse,
+    FormData
+  >(async (prevState: ActionResponse, formData: FormData) => {
+    try {
+      const result = await signinAction(formData);
+
+      if (result.ok) {
+        setUser(result.user);
+        window.location.href = "/home";
+      }
+
+      return result;
+    } catch (err) {
+      return {
+        ok: false,
+        message: (err as Error).message || "An error occurred",
+        errors: undefined,
+      };
+    }
+  }, initialState);
 
   const {
     register,
@@ -22,7 +54,14 @@ export default function LoginForm() {
   } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
-    console.log("Form Data:", data);
+    const formData = new FormData();
+
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    startTransition(() => {
+      formAction(formData);
+    });
   };
 
   return (
@@ -30,7 +69,7 @@ export default function LoginForm() {
       <CardContent className="p-8">
         <div className="text-xl md:text-2xl text-center font-medium mb-6 text-white">
           <p>Get started with InsightInk</p>
-          <p className="text-sm">Your sleek, modern voice-to-text todo app</p>
+          <p className="text-sm">To capture your day with AI</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -77,9 +116,10 @@ export default function LoginForm() {
           {/* Sign In Button */}
           <Button
             type="submit"
+            disabled={isPending}
             className="w-full bg-transparent border border-white/30 text-white hover:bg-white/10 hover:cursor-pointer"
           >
-            Sign In
+            {isPending ? "Signing in..." : "Sign In"}
           </Button>
 
           <p className="text-sm text-white text-center">
@@ -93,6 +133,10 @@ export default function LoginForm() {
               Sign Up
             </span>
           </p>
+
+          {state?.message && !state.ok && (
+            <p className="text-red-400 text-sm text-center">{state.message}</p>
+          )}
         </form>
       </CardContent>
     </Card>

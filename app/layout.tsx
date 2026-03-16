@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { getLoggedInUserAction } from "./actions/auth-action";
+import { UserProvider } from "./context/user-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,20 +16,23 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "InsightInk",
-  description: "A sleek, modern voice-to-text todo app",
+  description: "Capture your day with AI",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const data = await getLoggedInUserAction();
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning
       >
-        {children}
+        <UserProvider initialState={data.user}>{children}</UserProvider>
       </body>
     </html>
   );
