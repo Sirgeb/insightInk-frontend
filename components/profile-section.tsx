@@ -1,9 +1,16 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Pencil } from "lucide-react";
 import ProfileAvatar from "./profile-avatar";
+import { logoutAction } from "@/app/actions/auth-action";
 
 function ProfileSection() {
+  const handleLogout = async () => {
+    await logoutAction();
+  };
+
   return (
     // Profile Section
     <section className="flex justify-center mt-10 md:mt-16">
@@ -31,7 +38,10 @@ function ProfileSection() {
           <Button className="bg-emerald-600 hover:bg-emerald-700 hover:cursor-pointer text-white">
             Save Changes
           </Button>
-          <Button className="border-white/30 text-white hover:bg-white/10 hover:cursor-pointer">
+          <Button
+            onClick={handleLogout}
+            className="border-white/30 text-white hover:bg-white/10 hover:cursor-pointer"
+          >
             Logout
           </Button>
         </div>

@@ -96,7 +96,6 @@ export async function logoutAction(): Promise<void> {
   try {
     (await cookies()).delete("session");
   } catch (error) {
-    console.error("Sign out error:", error);
     throw new Error("An error occurred during sign out");
   } finally {
     redirect("/");
