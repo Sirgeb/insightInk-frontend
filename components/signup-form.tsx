@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { ActionResponse, signupAction } from "@/app/actions/auth-action";
 import { useActionState } from "react";
+import { toast } from "@/app/hooks/use-toast";
 
 type FormValues = {
   fullname: string;
@@ -32,6 +33,7 @@ export default function SignupForm() {
       const result = await signupAction(formData);
 
       if (result.ok) {
+        toast({ variant: "default", description: result.message });
         window.location.href = "/";
       }
 
