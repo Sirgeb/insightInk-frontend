@@ -1,20 +1,49 @@
 "use client";
 
+import { startTransition } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { ActionResponse, signupAction } from "@/app/actions/auth-action";
+import { useActionState } from "react";
 
 type FormValues = {
-  fullName: string;
+  fullname: string;
   email: string;
   password: string;
 };
 
+const initialState: ActionResponse = {
+  ok: false,
+  message: "",
+};
+
 export default function SignupForm() {
   const router = useRouter();
+
+  const [state, formAction, isPending] = useActionState<
+    ActionResponse,
+    FormData
+  >(async (prevState: ActionResponse, formData: FormData) => {
+    try {
+      const result = await signupAction(formData);
+
+      if (result.ok) {
+        window.location.href = "/";
+      }
+
+      return result;
+    } catch (err) {
+      return {
+        ok: false,
+        message: (err as Error).message,
+        errors: undefined,
+      };
+    }
+  }, initialState);
 
   const {
     register,
@@ -23,7 +52,15 @@ export default function SignupForm() {
   } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
-    console.log("Signup Data:", data);
+    const formData = new FormData();
+
+    formData.append("fullname", data.fullname);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    startTransition(() => {
+      formAction(formData);
+    });
   };
 
   return (
@@ -41,7 +78,7 @@ export default function SignupForm() {
               type="text"
               placeholder="Full Name"
               className="bg-transparent border-white/30 text-white placeholder:text-gray-400 focus:border-teal-400 focus:ring-0"
-              {...register("fullName", {
+              {...register("fullname", {
                 required: "Full name is required",
                 minLength: {
                   value: 2,
@@ -49,8 +86,8 @@ export default function SignupForm() {
                 },
               })}
             />
-            {errors.fullName && (
-              <p className="text-red-400 text-sm">{errors.fullName.message}</p>
+            {errors.fullname && (
+              <p className="text-red-400 text-sm">{errors.fullname.message}</p>
             )}
           </div>
 
@@ -97,9 +134,10 @@ export default function SignupForm() {
           {/* Sign Up Button */}
           <Button
             type="submit"
+            disabled={isPending}
             className="w-full bg-transparent border border-white/30 text-white hover:bg-white/10 hover:cursor-pointer"
           >
-            Sign Up
+            {isPending ? "Signing up..." : "Sign Up"}
           </Button>
 
           <p className="text-sm text-white text-center">
@@ -113,6 +151,10 @@ export default function SignupForm() {
               Sign In
             </span>
           </p>
+
+          {state?.message && !state.ok && (
+            <p className="text-red-400 text-sm text-center">{state.message}</p>
+          )}
         </form>
       </CardContent>
     </Card>
