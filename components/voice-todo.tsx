@@ -41,7 +41,7 @@ export default function VoiceTodo() {
         render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
           <div className="w-full max-w-3xl mx-auto">
             <div className="rounded-2xl border border-white/10 bg-[#0b0f0f] p-6 backdrop-blur-md">
-              <h2 className="text-lg md:text-xl text-gray-300 mb-4">
+              <h2 className="text-lg md:text-xl text-gray-300 mb-4 max-sm:mb-16">
                 Capture Your Day
               </h2>
 

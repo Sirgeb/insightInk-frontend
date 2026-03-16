@@ -27,14 +27,14 @@ export default function TodoItem({
         {task.tags?.map((tag, i) => (
           <span
             key={i}
-            className="text-xs bg-emerald-700 px-2 py-1 rounded-full"
+            className="max-sm:text-[10px] text-xs bg-emerald-700 max-sm:px-1 px-2 py-1 rounded-full"
           >
             {tag.toUpperCase()}
           </span>
         ))}
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 ml-2">
         <span className="text-xs text-gray-400">
           {task.duration_minutes} min
         </span>

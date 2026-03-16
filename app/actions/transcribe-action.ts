@@ -31,7 +31,7 @@ export async function transcribeAudio(formData: FormData) {
       - task (string)
       - duration_minutes (integer)
       - priority ("high" or "low")
-      - tags (array of strings)
+      - tags (array of strings) with two or three tags at maximum
 
       Transcript:
       ${transcriptText}
@@ -48,7 +48,8 @@ export async function transcribeAudio(formData: FormData) {
         },
         { role: "user", content: prompt },
       ],
-      temperature: 0.2,
+      temperature: 0.5,
+      max_completion_tokens: 2000,
     });
 
     const tasksJSON = response.choices[0].message?.content;

@@ -31,7 +31,6 @@ export default async function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressHydrationWarning
       >
         <UserProvider initialState={data.user}>
           {children}
