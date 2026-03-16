@@ -2,9 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import UserAvatar from "./user-avatar";
+import { useContext } from "react";
+import { UserContext, UserContextType } from "@/app/context/user-context";
 
 function Navbar() {
   const router = useRouter();
+  const { user } = useContext<UserContextType>(UserContext);
 
   return (
     <header className="flex justify-between items-center max-w-5xl mx-auto mb-10">
@@ -19,7 +22,7 @@ function Navbar() {
         className="hover:cursor-pointer"
         onClick={() => router.push("/profile")}
       >
-        <UserAvatar />
+        <UserAvatar imageUrl={user?.picture} />
       </div>
     </header>
   );

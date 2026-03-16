@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { getLoggedInUserAction } from "./actions/auth-action";
 import { UserProvider } from "./context/user-context";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,10 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <UserProvider initialState={data.user}>{children}</UserProvider>
+        <UserProvider initialState={data.user}>
+          {children}
+          <Toaster />
+        </UserProvider>
       </body>
     </html>
   );
